@@ -27,7 +27,7 @@ public class CurrencyConverter {
         Double exchangeRate = rates.get(toCurrency.getCode());
         
         if (exchangeRate == null) {
-            throw new RuntimeException("No se encontró la tasa de cambio para " + toCurrency.getCode());
+            throw new RuntimeException("No se encontro la tasa de cambio para " + toCurrency.getCode());
         }
 
         double convertedAmount = amount * exchangeRate;

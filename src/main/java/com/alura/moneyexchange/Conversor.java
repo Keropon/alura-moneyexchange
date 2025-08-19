@@ -7,25 +7,29 @@ import java.util.Scanner;
 public class Conversor {
     private final CurrencyConverter currencyConverter;
     private final Scanner scanner;
+    private final CurrencyInfoService currencyInfoService;
 
     public Conversor() {
         this.currencyConverter = new CurrencyConverter();
         this.scanner = new Scanner(System.in);
+        this.currencyInfoService = new CurrencyInfoService();
     }
 
     public void exibirMenu() {
         System.out.println("*".repeat(50));
         System.out.println("Sea bienvenido/a al Conversor de Moneda =]");
         System.out.println();
-        System.out.println("1) Dólar =>> Peso argentino");
-        System.out.println("2) Peso argentino =>> Dólar");
-        System.out.println("3) Dólar =>> Real brasileño");
-        System.out.println("4) Real brasileño =>> Dólar");
-        System.out.println("5) Dólar =>> Peso colombiano");
-        System.out.println("6) Peso colombiano =>> Dólar");
+        System.out.println("1) Dolar =>> Peso argentino");
+        System.out.println("2) Peso argentino =>> Dolar");
+        System.out.println("3) Dolar =>> Real brasileno");
+        System.out.println("4) Real brasileno =>> Dolar");
+        System.out.println("5) Dolar =>> Peso colombiano");
+        System.out.println("6) Peso colombiano =>> Dolar");
         System.out.println("7) Ver historial de conversiones");
-        System.out.println("8) Salir");
-        System.out.println("Elija una opción válida:");
+        System.out.println("8) Ver monedas soportadas");
+        System.out.println("9) Buscar informacion de moneda");
+        System.out.println("10) Salir");
+        System.out.println("Elija una opcion valida:");
         System.out.println("*".repeat(50));
     }
 
@@ -61,15 +65,25 @@ public class Conversor {
                         mostrarHistorial();
                         break;
                     case 8:
+                        currencyInfoService.mostrarMonedasSoportadas();
+                        break;
+                    case 9:
+                        buscarMoneda();
+                        break;
+                    case 10:
                         continuar = false;
                         System.out.println("¡Gracias por usar el conversor de monedas!");
                         break;
                     default:
-                        System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 8.");
+                        System.out.println("Opcion no valida. Por favor, seleccione una opcion del 1 al 10.");
                 }
                 
-                if (continuar && opcion != 7) {
+                if (continuar && opcion != 7 && opcion != 8 && opcion != 9) {
                     System.out.println("\nPresione Enter para continuar...");
+                    scanner.nextLine();
+                    scanner.nextLine();
+                } else if (continuar && (opcion == 8 || opcion == 9)) {
+                    System.out.println("Presione Enter para continuar...");
                     scanner.nextLine();
                     scanner.nextLine();
                 }
@@ -124,5 +138,24 @@ public class Conversor {
         System.out.println("Presione Enter para continuar...");
         scanner.nextLine();
         scanner.nextLine();
+    }
+
+    private void buscarMoneda() {
+        try {
+            System.out.println("\n=== BUSCAR INFORMACION DE MONEDA ===");
+            System.out.print("Ingrese el codigo de la moneda (ej: USD, EUR, JPY): ");
+            scanner.nextLine(); // Consume the newline
+            String codigo = scanner.nextLine().trim().toUpperCase();
+            
+            if (codigo.isEmpty()) {
+                System.out.println("Por favor ingrese un codigo valido.");
+                return;
+            }
+            
+            currencyInfoService.buscarMoneda(codigo);
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

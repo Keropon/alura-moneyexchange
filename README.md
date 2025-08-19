@@ -27,6 +27,8 @@ Este proyecto es un **Conversor de Monedas** desarrollado en Java como parte del
 - ✅ Conversión en tiempo real entre 6 monedas diferentes
 - ✅ Interfaz de consola intuitiva con menú de opciones
 - ✅ Historial de conversiones con marca de tiempo
+- ✅ Catálogo de 70+ monedas internacionales soportadas
+- ✅ Búsqueda de información detallada por código de moneda
 - ✅ Manejo de errores y validación de entrada
 - ✅ Consumo de API REST con HttpClient
 - ✅ Parseo de JSON con Gson
@@ -49,15 +51,17 @@ Este proyecto es un **Conversor de Monedas** desarrollado en Java como parte del
 **************************************************
 Sea bienvenido/a al Conversor de Moneda =]
 
-1) Dólar =>> Peso argentino
-2) Peso argentino =>> Dólar
-3) Dólar =>> Real brasileño
-4) Real brasileño =>> Dólar
-5) Dólar =>> Peso colombiano
-6) Peso colombiano =>> Dólar
+1) Dolar =>> Peso argentino
+2) Peso argentino =>> Dolar
+3) Dolar =>> Real brasileno
+4) Real brasileno =>> Dolar
+5) Dolar =>> Peso colombiano
+6) Peso colombiano =>> Dolar
 7) Ver historial de conversiones
-8) Salir
-Elija una opción válida:
+8) Ver monedas soportadas
+9) Buscar informacion de moneda
+10) Salir
+Elija una opcion valida:
 **************************************************
 ```
 
@@ -77,6 +81,46 @@ El valor de 25.00 [Dólar estadounidense] corresponde al valor final de =>>> 324
 1. 25.00 USD = 32472.50 ARS (Tasa: 1298.9000) [19/08/2025 10:30:15]
 2. 250.00 BRL = 46.25 USD (Tasa: 0.1850) [19/08/2025 10:32:22]
 --- FIN DEL HISTORIAL ---
+```
+
+### Catálogo de Monedas Soportadas
+
+```txt
+================================================================================
+           MONEDAS SOPORTADAS POR EXCHANGERATE-API
+================================================================================
+
+CODIGO | NOMBRE                    | PAIS/REGION
+--------------------------------------------------------------------------------
+
+--- AMERICAS ---
+USD  | US Dollar                 | United States
+CAD  | Canadian Dollar           | Canada
+BRL  | Brazilian Real            | Brazil
+ARS  | Argentine Peso            | Argentina
+...
+
+--- EUROPA ---
+EUR  | Euro                      | European Union
+GBP  | British Pound             | United Kingdom
+CHF  | Swiss Franc               | Switzerland
+...
+
+Total: 70+ monedas soportadas
+================================================================================
+```
+
+### Búsqueda de Moneda
+
+```txt
+=== BUSCAR INFORMACION DE MONEDA ===
+Ingrese el codigo de la moneda (ej: USD, EUR, JPY): EUR
+
+=== INFORMACION DE LA MONEDA ===
+Codigo: EUR
+Nombre: Euro
+Pais/Region: European Union
+================================
 ```
 
 ## 🛠 Tecnologías Utilizadas
@@ -129,7 +173,8 @@ El valor de 25.00 [Dólar estadounidense] corresponde al valor final de =>>> 324
 2. **Ingresar la cantidad** que desea convertir
 3. **Ver el resultado** de la conversión
 4. **Consultar el historial** con la opción 7
-5. **Salir** con la opción 8
+5. **Revisar otras conversiones** con la opción 8 y 9
+6. **Salir** con la opción 10
 
 ## 📁 Estructura del Proyecto
 

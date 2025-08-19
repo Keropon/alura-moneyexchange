@@ -35,7 +35,7 @@ public class ExchangeRateApiClient {
             }
             properties.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Error al cargar la configuración: " + e.getMessage());
+            throw new RuntimeException("Error al cargar la configuracion: " + e.getMessage());
         }
         return properties;
     }

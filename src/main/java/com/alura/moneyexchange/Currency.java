@@ -1,9 +1,9 @@
 package com.alura.moneyexchange;
 
 public enum Currency {
-    USD("USD", "Dólar estadounidense"),
+    USD("USD", "Dolar estadounidense"),
     ARS("ARS", "Peso argentino"),
-    BRL("BRL", "Real brasileño"),
+    BRL("BRL", "Real brasileno"),
     COP("COP", "Peso colombiano"),
     CLP("CLP", "Peso chileno"),
     BOB("BOB", "Boliviano boliviano");
