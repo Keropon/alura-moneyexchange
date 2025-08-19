@@ -24,7 +24,9 @@ Este proyecto es un **Conversor de Monedas** desarrollado en Java como parte del
 
 ## ⚡ Funcionalidades
 
-- ✅ Conversión en tiempo real entre 6 monedas diferentes
+- ✅ Conversión en tiempo real entre 6 monedas principales (predefinidas)
+- ✅ Conversión entre cualquier moneda soportada y USD
+- ✅ Conversión desde USD a cualquier moneda soportada
 - ✅ Interfaz de consola intuitiva con menú de opciones
 - ✅ Historial de conversiones con marca de tiempo
 - ✅ Catálogo de 70+ monedas internacionales soportadas
@@ -60,7 +62,9 @@ Sea bienvenido/a al Conversor de Moneda =]
 7) Ver historial de conversiones
 8) Ver monedas soportadas
 9) Buscar informacion de moneda
-10) Salir
+10) Convertir cualquier moneda a USD
+11) Convertir USD a cualquier moneda
+12) Salir
 Elija una opcion valida:
 **************************************************
 ```
@@ -123,6 +127,26 @@ Pais/Region: European Union
 ================================
 ```
 
+### Conversión Extendida de Monedas
+
+```txt
+=== CONVERTIR CUALQUIER MONEDA A USD ===
+Ingrese el codigo de la moneda de origen (ej: EUR, JPY, GBP): EUR
+Ingresa el valor en EUR (Euro) que deseas convertir a USD: 100
+Consultando tasas de cambio...
+
+El valor de 100.00 [EUR - Euro] corresponde al valor final de =>>> 107.85 [USD - US Dollar]
+```
+
+```txt
+=== CONVERTIR USD A CUALQUIER MONEDA ===
+Ingrese el codigo de la moneda destino (ej: EUR, JPY, GBP): JPY
+Ingresa el valor en USD que deseas convertir a JPY (Japanese Yen): 50
+Consultando tasas de cambio...
+
+El valor de 50.00 [USD - US Dollar] corresponde al valor final de =>>> 7387.95 [JPY - Japanese Yen]
+```
+
 ## 🛠 Tecnologías Utilizadas
 
 - **Java 11+** - Lenguaje de programación principal
@@ -169,12 +193,14 @@ Pais/Region: European Union
 
 ### Como Usar la Aplicación
 
-1. **Seleccionar una opción** del menú (1-8)
+1. **Seleccionar una opción** del menú (1-12)
 2. **Ingresar la cantidad** que desea convertir
 3. **Ver el resultado** de la conversión
 4. **Consultar el historial** con la opción 7
-5. **Revisar otras conversiones** con la opción 8 y 9
-6. **Salir** con la opción 10
+5. **Explorar monedas soportadas** con la opción 8
+6. **Buscar información de monedas** con la opción 9
+7. **Convertir entre cualquier moneda y USD** con las opciones 10 y 11
+8. **Salir** con la opción 12
 
 ## 📁 Estructura del Proyecto
 
@@ -182,13 +208,16 @@ Pais/Region: European Union
 src/
 ├── main/
 │   ├── java/com/alura/moneyexchange/
-│   │   ├── Main.java                   # Clase principal
-│   │   ├── Conversor.java              # Interfaz de usuario y menú
-│   │   ├── CurrencyConverter.java      # Lógica de conversión
-│   │   ├── ExchangeRateApiClient.java  # Cliente API
-│   │   ├── ExchangeRateResponse.java   # Modelo de respuesta API
-│   │   ├── ConversionResult.java       # Modelo de resultado
-│   │   └── Currency.java               # Enum de monedas
+│   │   ├── Main.java                      # Clase principal
+│   │   ├── Conversor.java                 # Interfaz de usuario y menú
+│   │   ├── CurrencyConverter.java         # Lógica de conversión
+│   │   ├── ExchangeRateApiClient.java     # Cliente API
+│   │   ├── ExchangeRateResponse.java      # Modelo de respuesta API
+│   │   ├── ConversionResult.java          # Modelo de resultado básico
+│   │   ├── ExtendedConversionResult.java  # Modelo de resultado extendido
+│   │   ├── Currency.java                  # Enum de monedas básicas
+│   │   ├── ExtendedCurrency.java          # Enum de 70+ monedas
+│   │   └── CurrencyInfoService.java       # Servicio de información de monedas
 │   └── resources/
 │       └── config.properties           # Configuración (API Key)
 ├── pom.xml                             # Configuración Maven

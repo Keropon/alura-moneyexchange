@@ -28,7 +28,9 @@ public class Conversor {
         System.out.println("7) Ver historial de conversiones");
         System.out.println("8) Ver monedas soportadas");
         System.out.println("9) Buscar informacion de moneda");
-        System.out.println("10) Salir");
+        System.out.println("10) Convertir cualquier moneda a USD");
+        System.out.println("11) Convertir USD a cualquier moneda");
+        System.out.println("12) Salir");
         System.out.println("Elija una opcion valida:");
         System.out.println("*".repeat(50));
     }
@@ -71,18 +73,24 @@ public class Conversor {
                         buscarMoneda();
                         break;
                     case 10:
+                        convertirMonedaAUsd();
+                        break;
+                    case 11:
+                        convertirUsdAMoneda();
+                        break;
+                    case 12:
                         continuar = false;
                         System.out.println("¡Gracias por usar el conversor de monedas!");
                         break;
                     default:
-                        System.out.println("Opcion no valida. Por favor, seleccione una opcion del 1 al 10.");
+                        System.out.println("Opcion no valida. Por favor, seleccione una opcion del 1 al 12.");
                 }
                 
-                if (continuar && opcion != 7 && opcion != 8 && opcion != 9) {
+                if (continuar && opcion >= 1 && opcion <= 6) {
                     System.out.println("\nPresione Enter para continuar...");
                     scanner.nextLine();
                     scanner.nextLine();
-                } else if (continuar && (opcion == 8 || opcion == 9)) {
+                } else if (continuar && (opcion >= 7 && opcion <= 11)) {
                     System.out.println("Presione Enter para continuar...");
                     scanner.nextLine();
                     scanner.nextLine();
@@ -154,6 +162,100 @@ public class Conversor {
             
             currencyInfoService.buscarMoneda(codigo);
             
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void convertirMonedaAUsd() {
+        try {
+            System.out.println("\n=== CONVERTIR CUALQUIER MONEDA A USD ===");
+            System.out.print("Ingrese el codigo de la moneda de origen (ej: EUR, JPY, GBP): ");
+            scanner.nextLine(); // Consume the newline
+            String codigoOrigen = scanner.nextLine().trim().toUpperCase();
+            
+            if (codigoOrigen.isEmpty()) {
+                System.out.println("Por favor ingrese un codigo valido.");
+                return;
+            }
+            
+            if (codigoOrigen.equals("USD")) {
+                System.out.println("Ya estas en USD. No es necesario convertir.");
+                return;
+            }
+            
+            ExtendedCurrency monedaOrigen = ExtendedCurrency.findByCode(codigoOrigen);
+            if (monedaOrigen == null) {
+                System.out.println("Moneda no encontrada: " + codigoOrigen);
+                System.out.println("Use la opcion 8 para ver todas las monedas disponibles.");
+                return;
+            }
+            
+            System.out.printf("Ingresa el valor en %s (%s) que deseas convertir a USD: ", 
+                    codigoOrigen, monedaOrigen.getName());
+            double cantidad = scanner.nextDouble();
+            
+            if (cantidad <= 0) {
+                System.out.println("Por favor, ingrese un valor positivo.");
+                return;
+            }
+            
+            System.out.println("Consultando tasas de cambio...");
+            ExtendedConversionResult resultado = currencyConverter.convertExtendedCurrency(codigoOrigen, "USD", cantidad);
+            
+            System.out.println();
+            System.out.println(resultado.getFormattedResult());
+            System.out.println();
+            
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error al consultar la API: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void convertirUsdAMoneda() {
+        try {
+            System.out.println("\n=== CONVERTIR USD A CUALQUIER MONEDA ===");
+            System.out.print("Ingrese el codigo de la moneda destino (ej: EUR, JPY, GBP): ");
+            scanner.nextLine(); // Consume the newline
+            String codigoDestino = scanner.nextLine().trim().toUpperCase();
+            
+            if (codigoDestino.isEmpty()) {
+                System.out.println("Por favor ingrese un codigo valido.");
+                return;
+            }
+            
+            if (codigoDestino.equals("USD")) {
+                System.out.println("Ya estas en USD. No es necesario convertir.");
+                return;
+            }
+            
+            ExtendedCurrency monedaDestino = ExtendedCurrency.findByCode(codigoDestino);
+            if (monedaDestino == null) {
+                System.out.println("Moneda no encontrada: " + codigoDestino);
+                System.out.println("Use la opcion 8 para ver todas las monedas disponibles.");
+                return;
+            }
+            
+            System.out.printf("Ingresa el valor en USD que deseas convertir a %s (%s): ", 
+                    codigoDestino, monedaDestino.getName());
+            double cantidad = scanner.nextDouble();
+            
+            if (cantidad <= 0) {
+                System.out.println("Por favor, ingrese un valor positivo.");
+                return;
+            }
+            
+            System.out.println("Consultando tasas de cambio...");
+            ExtendedConversionResult resultado = currencyConverter.convertExtendedCurrency("USD", codigoDestino, cantidad);
+            
+            System.out.println();
+            System.out.println(resultado.getFormattedResult());
+            System.out.println();
+            
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error al consultar la API: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

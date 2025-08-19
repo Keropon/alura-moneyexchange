@@ -38,6 +38,40 @@ public class CurrencyConverter {
         return result;
     }
 
+    public ExtendedConversionResult convertExtendedCurrency(String fromCurrencyCode, String toCurrencyCode, double amount) 
+            throws IOException, InterruptedException {
+        
+        ExchangeRateResponse response = apiClient.getExchangeRates(fromCurrencyCode);
+        
+        if (!"success".equals(response.getResult())) {
+            throw new RuntimeException("Error al obtener las tasas de cambio");
+        }
+
+        Map<String, Double> rates = response.getConversionRates();
+        Double exchangeRate = rates.get(toCurrencyCode);
+        
+        if (exchangeRate == null) {
+            throw new RuntimeException("No se encontro la tasa de cambio para " + toCurrencyCode);
+        }
+
+        double convertedAmount = amount * exchangeRate;
+        
+        ExtendedCurrency fromCurrency = ExtendedCurrency.findByCode(fromCurrencyCode);
+        ExtendedCurrency toCurrency = ExtendedCurrency.findByCode(toCurrencyCode);
+        
+        if (fromCurrency == null) {
+            throw new RuntimeException("Moneda no encontrada: " + fromCurrencyCode);
+        }
+        if (toCurrency == null) {
+            throw new RuntimeException("Moneda no encontrada: " + toCurrencyCode);
+        }
+        
+        ExtendedConversionResult result = new ExtendedConversionResult(fromCurrency, toCurrency, amount, convertedAmount, exchangeRate);
+        // Note: For now, we'll keep separate histories. Could be unified later if needed.
+        
+        return result;
+    }
+
     public List<ConversionResult> getConversionHistory() {
         return new ArrayList<>(conversionHistory);
     }
